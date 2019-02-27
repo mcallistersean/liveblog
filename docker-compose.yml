@@ -36,6 +36,12 @@ services:
     network_mode: bridge
     volumes:
     - ./data/redis:/data:rw
+  nginx:
+    build:
+      context: .
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
   superdesk:
     environment:
       AMAZON_ACCESS_KEY_ID: null
