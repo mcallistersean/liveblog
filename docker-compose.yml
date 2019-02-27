@@ -1,0 +1,84 @@
+services:
+  elastic:
+    image: elasticsearch:1.5
+    network_mode: bridge
+    volumes:
+      - ./data/elastic:/usr/share/elasticsearch/data:rw
+  kibana:
+    image: sourcefabric/kibana:liveblogmaster
+    links:
+    - elastic
+    network_mode: bridge
+    ports:
+    - 5601:5601/tcp
+    restart: always
+  logstash:
+    command: logstash -f /usr/share/logstash/logstash.conf
+    image: logstash:1.5
+    links:
+    - elastic
+    network_mode: bridge
+    volumes:
+      - ./docker/logstash:/usr/share/logstash:rw
+  mongodb:
+    image: mongo:latest
+    network_mode: bridge
+    volumes:
+      - ./data/mongodb:/data/db:rw
+  postfix:
+    environment:
+      maildomain: mail.sourcefabric.org
+      smtp_user: user:pwd
+    image: catatnight/postfix
+    network_mode: bridge
+  redis:
+    image: redis:2.8
+    network_mode: bridge
+    volumes:
+    - ./data/redis:/data:rw
+  superdesk:
+    environment:
+      AMAZON_ACCESS_KEY_ID: null
+      AMAZON_CONTAINER_NAME: null
+      AMAZON_REGION: null
+      AMAZON_SECRET_ACCESS_KEY: null
+      CELERY_BROKER_URL: redis://redis:6379/1
+      ELASTICSEARCH_INDEX: null
+      ELASTICSEARCH_URL: http://elastic:9200
+      LEGAL_ARCHIVE_URI: mongodb://mongodb/test
+      LOG_SERVER_ADDRESS: logstash
+      LOG_SERVER_PORT: '5555'
+      MAIL_PASSWORD: pwd
+      MAIL_PORT: '25'
+      MAIL_SERVER: postfix
+      MAIL_USERNAME: user
+      MAIL_USE_SSL: "false"
+      MAIL_USE_TLS: "false"
+      MONGO_URI: mongodb://mongodb/test
+      PUBLICAPI_MONGO_URI: mongodb://mongodb/test
+      REDIS_URL: redis://redis:6379/1
+      REUTERS_PASSWORD: null
+      REUTERS_USERNAME: null
+      S3_THEMES_PREFIX: null
+      SENTRY_DSN: null
+      SUPERDESK_CLIENT_URL: http://127.0.0.1
+      SUPERDESK_TESTING: "True"
+      SUPERDESK_URL: http://127.0.0.1:8080/api
+      SUPERDESK_WS_URL: ws://127.0.0.1:8080/ws
+    image: liveblog:latest
+    links:
+    - elastic
+    - logstash
+    - mongodb
+    - postfix
+    - redis
+    network_mode: bridge
+    ports:
+      - 8080:80/tcp
+      - 8443:443/tcp
+    volumes:
+      - ./results/client/unit:/opt/superdesk/client/unit-test-results:rw
+      - ./results/server/behave:/opt/superdesk/results-behave:rw
+      - ./results/server/unit:/opt/superdesk/results-unit:rw
+version: '2.1'
+
