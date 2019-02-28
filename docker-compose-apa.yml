@@ -1,0 +1,17 @@
+version: "2.1"
+
+services:
+  nginx:
+    image: registry.apa.at/apamlbmcallister/liveblog-nginx
+    build:
+      args:
+        SUPERDESK_URL: http://aparedsyses2.apa.at:9180/api
+        SUPERDESK_WS_URL: ws://aparedsyses2.apa.at:9180/ws
+        EMBEDLY_KEY: fd92ebbc52fc43fb98f69e50e7893c13
+
+  superdesk:
+    image: registry.apa.at/apamlbmcallister/liveblog
+    environment:
+      SUPERDESK_URL: http://aparedsyses2.apa.at:9180/api
+      SUPERDESK_WS_URL: ws://aparedsyses2.apa.at:9180/ws
+      SUPERDESK_CLIENT_URL: http://aparedsyses2.apa.at:9180/ws

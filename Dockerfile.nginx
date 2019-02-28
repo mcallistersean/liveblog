@@ -1,18 +1,17 @@
 FROM node:6 as node-build
 
-ARG SUPERDESK_URL
-ARG SUPERDESK_WS_URL
-ARG EMBEDLY_KEY
-
-ENV EMBEDLY_KEY=$EMBEDLY_KEY
-
 WORKDIR /build
 
 COPY ./client/package.json ./client/package-lock.json ./
 RUN npm install -g grunt-cli && npm install
 COPY ./client .
-RUN grunt build --server=$SUPERDESK_URL --ws=$SUPERDESK_WS_URL
 
+ARG SUPERDESK_URL
+ARG SUPERDESK_WS_URL
+ARG EMBEDLY_KEY
+ENV EMBEDLY_KEY=$EMBEDLY_KEY
+
+RUN grunt build --server=$SUPERDESK_URL --ws=$SUPERDESK_WS_URL
 
 FROM nginx
 COPY --from=node-build /build/dist /opt/superdesk/client/dist
