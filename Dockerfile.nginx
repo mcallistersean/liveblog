@@ -1,12 +1,21 @@
-#FROM node:6 as node-build
-#WORKDIR /build
-#COPY ./client/package.json .
-#RUN npm -g install -g grunt-cli && npm install
-#COPY ./client .
-#RUN grunt build --server='http://localhost:8080/api' --ws='ws://localhost:8080/ws'
+FROM node:6 as node-build
+
+ARG SUPERDESK_URL
+ARG SUPERDESK_WS_URL
+ARG EMBEDLY_KEY
+
+ENV EMBEDLY_KEY=$EMBEDLY_KEY
+
+WORKDIR /build
+
+COPY ./client/package.json ./client/package-lock.json ./
+RUN npm install -g grunt-cli && npm install
+COPY ./client .
+RUN grunt build --server=$SUPERDESK_URL --ws=$SUPERDESK_WS_URL
+
 
 FROM nginx
-COPY client/dist /opt/superdesk/client/dist
+COPY --from=node-build /build/dist /opt/superdesk/client/dist
 COPY nginx.conf /etc/nginx/nginx.conf
 
 

@@ -1,8 +1,6 @@
-version: '2.1'
-
+version: "2.1"
 
 services:
-
   elastic:
     image: elasticsearch:1-alpine
 
@@ -11,30 +9,26 @@ services:
     volumes:
       - ./data/mongodb:/data/db:rw
 
-
   redis:
     image: redis:2.8
     volumes:
-    - ./data/redis:/data:rw
+      - ./data/redis:/data:rw
 
   nginx:
     build:
       context: .
       dockerfile: Dockerfile.nginx
-    image: nginx
+      args:
+        SUPERDESK_URL: ${SUPERDESK_URL}
+        SUPERDESK_WS_URL: ${SUPERDESK_WS_URL}
+        EMBEDLY_KEY: ${EMBEDLY_KEY}
+    image: liveblog-nginx
     depends_on:
       - superdesk
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 8080:80
-
-#  frontend:
-#    build:
-#      context: ./client/
-#      dockerfile: Dockerfile-dev
-#
-#    image: liveblog-client:latest
 
   superdesk:
     build:
@@ -44,22 +38,22 @@ services:
       - redis
       - mongodb
     environment:
-#      AMAZON_ACCESS_KEY_ID: null
-#      AMAZON_CONTAINER_NAME: null
-#      AMAZON_REGION: null
-#      AMAZON_SECRET_ACCESS_KEY: null
+      #      AMAZON_ACCESS_KEY_ID: null
+      #      AMAZON_CONTAINER_NAME: null
+      #      AMAZON_REGION: null
+      #      AMAZON_SECRET_ACCESS_KEY: null
       CELERY_BROKER_URL: redis://redis:6379/1
       ELASTICSEARCH_INDEX: null
       ELASTICSEARCH_URL: http://elastic:9200
       LEGAL_ARCHIVE_URI: mongodb://mongodb/test
-#      LOG_SERVER_ADDRESS: logstash
-#      LOG_SERVER_PORT: '5555'
-#      MAIL_PASSWORD: pwd
-#      MAIL_PORT: '25'
-#      MAIL_SERVER: postfix
-#      MAIL_USERNAME: user
-#      MAIL_USE_SSL: "false"
-#      MAIL_USE_TLS: "false"
+      #      LOG_SERVER_ADDRESS: logstash
+      #      LOG_SERVER_PORT: '5555'
+      #      MAIL_PASSWORD: pwd
+      #      MAIL_PORT: '25'
+      #      MAIL_SERVER: postfix
+      #      MAIL_USERNAME: user
+      #      MAIL_USE_SSL: "false"
+      #      MAIL_USE_TLS: "false"
       MONGO_URI: mongodb://mongodb/test
       PUBLICAPI_MONGO_URI: mongodb://mongodb/test
       REDIS_URL: redis://redis:6379/1
@@ -67,10 +61,10 @@ services:
       REUTERS_USERNAME: null
       S3_THEMES_PREFIX: null
       SENTRY_DSN: null
-      SUPERDESK_CLIENT_URL: http://localhost:8080
+      SUPERDESK_CLIENT_URL: ${SUPERDESK_CLIENT_URL}
       SUPERDESK_TESTING: "True"
-      SUPERDESK_URL: http://localhost:8080/api
-      SUPERDESK_WS_URL: ws://localhost:8080/ws
+      SUPERDESK_WS_URL: ${SUPERDESK_WS_URL}
+      SUPERDESK_URL: ${SUPERDESK_URL}
       DEBUG: "True"
       # required for celery to start as root
       C_FORCE_ROOT: "True"
@@ -79,4 +73,3 @@ services:
       - ./results/client/unit:/opt/superdesk/client/unit-test-results:rw
       - ./results/server/behave:/opt/superdesk/results-behave:rw
       - ./results/server/unit:/opt/superdesk/results-unit:rw
-
