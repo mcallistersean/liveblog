@@ -53,7 +53,9 @@ def get_app(config=None):
         media_storage = AmazonMediaStorage
 
     config['DOMAIN'] = {}
-
+    from pprint import pprint
+    pprint(config)
+    del config['SERVER_NAME']
     # Create superdesk app instance.
     app = superdesk_app(config, media_storage)
 

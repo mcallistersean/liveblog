@@ -92,6 +92,9 @@ CLIENT_URL = env('SUPERDESK_CLIENT_URL', 'http://localhost:9000')
 if not CLIENT_URL.startswith('http'):
     CLIENT_URL = 'http:' + CLIENT_URL
 
+
+
+print(server_url)
 URL_PROTOCOL = server_url.scheme or None
 SERVER_NAME = server_url.netloc or None
 URL_PREFIX = server_url.path.lstrip('/') or ''
@@ -358,3 +361,7 @@ DEFAULT_THEME_TIMEZONE = env('DEFAULT_THEME_TIMEZONE', arrow.now().format('ZZZ')
 
 # TTL for editing post flag (seconds). Default: 5 minutes
 EDIT_POST_FLAG_TTL = int(env('EDIT_POST_FLAG_TTL', 5 * 60))
+
+from pprint import pprint
+
+# pprint(locals())

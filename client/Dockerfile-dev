@@ -1,5 +1,5 @@
 # import base image
-FROM dockerfile/nodejs
+FROM node:lts
 
 # install system-wide dependencies
 RUN apt-get update && \
