@@ -1,715 +1,724 @@
 {
-    "label": "Liveblog 3 Default SEO Theme",
-    "name": "default",
-    "version": "3.5.3",
-    "asyncTheme": true,
-    "seoTheme": true,
-    "author": "Sourcefabric <contact@sourcefabric.org>",
-    "contributors": [
-        "Paul Solbach <psolbach@dpa-newslab.com>",
-        "Massimo Scamarcia <massimo.scamarcia@sourcefabric.org>",
-        "Löic Nogues <loic.nogues@sourcefabric.org>",
-        "Aleksandar Backo Jelicic <aleksandar.jelicic@sourcefabric.org>",
-        "Helmy Giacoman <helmy.giacoman@sourcefabric.org>"
-    ],
-    "repository": {
-        "type" : "git",
-        "url" : "git@github.com:liveblog/liveblog-default-theme"
+  "label": "Liveblog 3 Default SEO Theme",
+  "name": "default",
+  "version": "3.5.3",
+  "asyncTheme": true,
+  "seoTheme": true,
+  "author": "Sourcefabric <contact@sourcefabric.org>",
+  "contributors": [
+    "Paul Solbach <psolbach@dpa-newslab.com>",
+    "Massimo Scamarcia <massimo.scamarcia@sourcefabric.org>",
+    "Löic Nogues <loic.nogues@sourcefabric.org>",
+    "Aleksandar Backo Jelicic <aleksandar.jelicic@sourcefabric.org>",
+    "Helmy Giacoman <helmy.giacoman@sourcefabric.org>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:liveblog/liveblog-default-theme"
+  },
+  "license": "AGPL-3.0",
+  "devStyles": ["dist/default-60c22e8702.css"],
+  "devScripts": ["dist/default-34e9355502.js"],
+  "styles": ["dist/default-60c22e8702.css"],
+  "scripts": ["dist/default-34e9355502.js"],
+  "options": [
+    {
+      "name": "language",
+      "label": "Theme language",
+      "type": "select",
+      "options": [
+        {
+          "value": "en",
+          "label": "English"
+        },
+        {
+          "value": "fi",
+          "label": "Finnish"
+        },
+        {
+          "value": "sv",
+          "label": "Swedish"
+        },
+        {
+          "value": "de",
+          "label": "Deutsch"
+        },
+        {
+          "value": "fr",
+          "label": "Français"
+        },
+        {
+          "value": "nl",
+          "label": "Nederlands"
+        },
+        {
+          "value": "no",
+          "label": "Norsk"
+        },
+        {
+          "value": "cs",
+          "label": "Čeština"
+        },
+        {
+          "value": "ro",
+          "label": "Română"
+        },
+        {
+          "value": "sr",
+          "label": "Srpski"
+        },
+        {
+          "value": "sr-cy",
+          "label": "Српски"
+        }
+      ],
+      "default": "en"
     },
-    "license": "AGPL-3.0",
-    "devStyles": ["dist/default-6687c253f9.css"],
-    "devScripts": ["dist/default-3f8a48ec97.js"],
-    "styles": ["dist/default-6687c253f9.css"],
-    "scripts": ["dist/default-3f8a48ec97.js"],
-    "options": [
+    {
+      "name": "show-hide-group",
+      "label": "Show or Hide Liveblog Elements",
+      "type": "groupheading"
+    },
+    {
+      "name": "showTitle",
+      "label": "Show the blog title",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "name": "showDescription",
+      "label": "Show the blog description",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "name": "showImage",
+      "label": "Show the blog image",
+      "type": "checkbox",
+      "default": false
+    },
+    {
+      "name": "hidePostOrder",
+      "label": "Hide sorting options",
+      "type": "checkbox",
+      "default": false,
+      "help": "Hide the post order sorting options"
+    },
+    {
+      "name": "hasHighlights",
+      "label": "Show highlight button",
+      "type": "checkbox",
+      "default": false,
+      "help": "Introduces a button for the readers to filter the timeline by highlights"
+    },
+    {
+      "name": "canComment",
+      "label": "Users can comment",
+      "type": "checkbox",
+      "default": false,
+      "help": "Enables a commenting form for users"
+    },
+    {
+      "name": "showLiveblogLogo",
+      "label": "Show Liveblog logo",
+      "type": "checkbox",
+      "default": true,
+      "help": "Turn off to hide the “powered by Live Blog” logo"
+    },
+    {
+      "name": "date-group",
+      "label": "Date time Format",
+      "type": "groupheading"
+    },
+    {
+      "name": "datetimeFormat",
+      "label": "Pick a format or add a custom one",
+      "type": "datetimeformat",
+      "default": "lll",
+      "help": "Sets the date time format to be used in the embed. Please enter a custom format in valid moment.js format http://momentjs.com/docs/#/parsing/string-format"
+    },
+    {
+      "name": "showRelativeDate",
+      "label": "Show relative date for new posts",
+      "type": "checkbox",
+      "default": false,
+      "help": "If activated, users will see relative date for new posts only. Posts older than 8h will display date in format defined above."
+    },
+    {
+      "name": "showUpdateDatetime",
+      "label": "Show post update time",
+      "type": "checkbox",
+      "default": false,
+      "help": "If activated, users will see an additional timestamp, when the post has been updated"
+    },
+    {
+      "name": "clientDatetimeOnly",
+      "label": "Show datetime only on client",
+      "type": "checkbox",
+      "default": false,
+      "isAdvanced": true,
+      "help": "If the users will see the datetime only on client rendered"
+    },
+    {
+      "name": "authors-group",
+      "label": "Authors",
+      "type": "groupheading"
+    },
+    {
+      "name": "showAuthor",
+      "label": "Show the author",
+      "type": "checkbox",
+      "default": true,
+      "help": "Show the author information on posts"
+    },
+    {
+      "name": "authorNameFormat",
+      "label": "Author name format",
+      "type": "select",
+      "default": "display_name",
+      "dependsOn": {
+        "showAuthor": true
+      },
+      "options": [
+        { "value": "display_name", "label": "Full name" },
+        { "value": "byline", "label": "Byline" },
+        { "value": "sign_off", "label": "Sign off" }
+      ],
+      "help": "How to show the author info"
+    },
+    {
+      "name": "authorPosition",
+      "label": "Author info position",
+      "default": "top",
+      "type": "select",
+      "options": [
         {
-            "name": "language",
-            "label": "Theme language",
-            "type": "select",
-            "options": [
-                {
-                    "value": "en",
-                    "label": "English"
-                },
-                {
-                    "value": "fi",
-                    "label": "Finnish"
-                },
-                {
-                    "value": "sv",
-                    "label": "Swedish"
-                },
-                {
-                    "value": "de",
-                    "label": "Deutsch"
-                },
-                {
-                    "value": "fr",
-                    "label": "Français"
-                },
-                {
-                    "value": "nl",
-                    "label": "Nederlands"
-                },
-                {
-                    "value": "no",
-                    "label": "Norsk"
-                },
-                {
-                    "value": "cs",
-                    "label": "Čeština"
-                },
-                {
-                    "value": "ro",
-                    "label": "Română"
-                },
-                {
-                    "value": "sr",
-                    "label": "Srpski"
-                },
-                {
-                    "value": "sr-cy",
-                    "label": "Српски"
-                }
-            ],
-            "default": "en"
+          "value": "top",
+          "label": "Top"
         },
         {
-          "name": "show-hide-group",
-          "label": "Show or Hide Liveblog Elements",
-          "type": "groupheading"
-        },
-        {
-            "name": "showTitle",
-            "label": "Show the blog title",
-            "type": "checkbox",
-            "default": false
-        },
-        {
-            "name": "showDescription",
-            "label": "Show the blog description",
-            "type": "checkbox",
-            "default": false
-        },
-        {
-            "name": "showImage",
-            "label": "Show the blog image",
-            "type": "checkbox",
-            "default": false
-        },
-        {
-            "name": "hidePostOrder",
-            "label": "Hide sorting options",
-            "type": "checkbox",
-            "default": false,
-            "help": "Hide the post order sorting options"
-        },
-        {
-            "name": "hasHighlights",
-            "label": "Show highlight button",
-            "type": "checkbox",
-            "default": false,
-            "help": "Introduces a button for the readers to filter the timeline by highlights"
-        },
-        {
-            "name": "canComment",
-            "label": "Users can comment",
-            "type": "checkbox",
-            "default": false,
-            "help": "Enables a commenting form for users"
-        },
-        {
-            "name": "showLiveblogLogo",
-            "label": "Show Liveblog logo",
-            "type": "checkbox",
-            "default": true,
-            "help": "Turn off to hide the “powered by Live Blog” logo"
-        },
-        {
-            "name": "date-group",
-            "label": "Date time Format",
-            "type": "groupheading"
-        },
-        {
-            "name": "datetimeFormat",
-            "label": "Pick a format or add a custom one",
-            "type": "datetimeformat",
-            "default": "lll",
-            "help": "Sets the date time format to be used in the embed. Please enter a custom format in valid moment.js format http://momentjs.com/docs/#/parsing/string-format"
-        },
-        {
-            "name": "showRelativeDate",
-            "label": "Show relative date for new posts",
-            "type": "checkbox",
-            "default": false,
-            "help": "If activated, users will see relative date for new posts only. Posts older than 8h will display date in format defined above."
-        },
-        {
-            "name": "showUpdateDatetime",
-            "label": "Show post update time",
-            "type": "checkbox",
-            "default": false,
-            "help": "If activated, users will see an additional timestamp, when the post has been updated"
-        },
-        {
-            "name": "clientDatetimeOnly",
-            "label": "Show datetime only on client",
-            "type": "checkbox",
-            "default": false,
-            "isAdvanced": true,
-            "help": "If the users will see the datetime only on client rendered"
-        },
-        {
-            "name": "authors-group",
-            "label": "Authors",
-            "type": "groupheading"
-        },
-        {
-            "name": "showAuthor",
-            "label": "Show the author",
-            "type": "checkbox",
-            "default": true,
-            "help": "Show the author information on posts"
-        },
-        {
-            "name": "authorNameFormat",
-            "label": "Author name format",
-            "type": "select",
-            "default": "display_name",
-            "dependsOn": {
-                "showAuthor": true
-            },
-            "options": [
-                {"value": "display_name", "label": "Full name"},
-                {"value": "byline", "label": "Byline"},
-                {"value": "sign_off", "label": "Sign off"}
-            ],
-            "help": "How to show the author info"
-        },
-        {
-            "name": "authorPosition",
-            "label": "Author info position",
-            "default": "top",
-            "type": "select",
-            "options": [
-                {
-                    "value": "top",
-                    "label": "Top"
-                },
-                {
-                    "value": "bottom",
-                    "label": "Bottom"
-                }
-            ],
-            "dependsOn": {
-                "showAuthor": true
-            },
-            "help": "Where to show author info"
-        },
-        {
-            "name": "showAuthorAvatar",
-            "label": "Show author avatar",
-            "type": "checkbox",
-            "default": true,
-            "dependsOn": {
-                "showAuthor": true
-            },
-            "help": "Shows an author image besides the author name"
-        },
-        {
-            "name": "showSyndicatedAuthor",
-            "label": "Show syndicated author",
-            "type": "checkbox",
-            "default": false,
-            "isAdvanced": true,
-            "help": "If the users will see the syndicated author"
-        },
-        {
-            "name": "posts-options-group",
-            "label": "Show or hide posts options",
-            "type": "groupheading"
-        },
-        {
-            "name": "stickyPosition",
-            "label": "Pinned post behaviour",
-            "type": "select",
-            "options": [
-                {"value": "bottom", "label": "Show below menu bar"},
-                {"value": "top", "label": "Show above menu bar"}
-            ],
-            "default": "bottom",
-            "help": "Please note: Pinned posts above the menu bar will not show the author info nor a timestamp. This setting is especially useful if you want to show a (streaming) video on top of your timeline."
-        },
-        {
-            "name": "showGallery",
-            "label": "Show slideshow gallery",
-            "type": "checkbox",
-            "default": false,
-            "help": "Multiple image posts will show up as an image gallery"
-        },
-        {
-            "name": "showSharingButtons",
-            "label": "Show social media sharing buttons",
-            "type": "checkbox",
-            "default": true
-        },
-        {
-            "name": "showPermalinkButton",
-            "label": "Show permalink button",
-            "type": "checkbox",
-            "default": true
-        },
-        {
-            "name": "permalinkDelimiter",
-            "label": "Permalink delimiter",
-            "type": "select",
-            "isAdvanced": true,
-            "options": [
-                {
-                    "value": "?",
-                    "label": "Query delimiter (?)"
-                },
-                {
-                    "value": "#",
-                    "label": " Fragment identifier delimiter (#)"
-                }
-            ],
-            "default": "?",
-            "help": "Sets the delimiter used to send the permalink. ex: permalinkHashMark=?, http://example.com/?..."
-        },
-        {
-            "name": "visibility-group",
-            "label": "Blog visibility",
-            "type": "groupheading"
-        },
-        {
-            "name": "blockSearchEngines",
-            "label": "Block search engines",
-            "type": "checkbox",
-            "default": true,
-            "help": "Will block search engines from indexing the blog content"
-        },
-        {
-            "name": "gaCode",
-            "label": "Google analytics code",
-            "type": "text",
-            "placeholder": "UA-XXXXX-Y",
-            "default": "",
-            "help": "Please enter your google analytics account ID."
-        },
-        {
-            "name": "data-privacy-group",
-            "label": "Data Privacy Options",
-            "type": "groupheading",
-            "isAdvanced": true
-        },
-        {
-            "name": "youtubePrivateMode",
-            "label": "Youtube privacy-enhanced mode",
-            "type": "checkbox",
-            "help": "Always use non tracking version of Youtube embeds",
-            "default": false,
-            "isAdvanced": true
-        },
-        {
-            "name": "twitterDNT",
-            "label": "Twitter - do not track",
-            "type": "checkbox",
-            "help": "You can opt out of having information from your website used for personalization.",
-            "default": false,
-            "isAdvanced": true
-        },
-        {
-            "name": "edge-server-side-group",
-            "label": "Edge or Server Side Include Options",
-            "type": "groupheading",
-            "isAdvanced": true
-        },
-        {
-            "name": "renderForESI",
-            "label": "Optimise the Live Blog output for ESI",
-            "type": "checkbox",
-            "default": false,
-            "help": "Strips the head and body tags from the Live Blog output to publish it using Edge Side Includes",
-            "isAdvanced": true
-        },
-        {
-            "name": "removeStylesESI",
-            "label": "Remove stylesheet from the Live Blog output for ESI",
-            "type": "checkbox",
-            "default": false,
-            "help": "Removes the link to the stylesheet from the Live Blog output to publish it using Edge Side Includes",
-            "isAdvanced": true
-        },
-        {
-            "name": "outputChannel",
-            "label": "Output Channel",
-            "type": "checkbox",
-            "default": false,
-            "help": "Turn on to create the output channel automatically",
-            "isAdvanced": true
-        },
-        {
-            "name": "outputChannelName",
-            "label": "Output channel name",
-            "type": "text",
-            "dependsOn": {
-                "outputChannel": true
-            },
-            "help": "Enter the output channel name",
-            "isAdvanced": true
-        },
-        {
-            "name": "outputChannelTheme",
-            "label": "Output channel theme",
-            "type": "select",
-            "default": "amp",
-            "dependsOn": {
-                "outputChannel": true
-            },
-            "isAdvanced": true,
-            "options": [
-                {"value": "classic", "label": "Classic Theme"},
-                {"value": "default", "label": "Liveblog 3 Default SEO Theme"},
-                {"value": "amp", "label": "Liveblog 3 AMP Theme"}
-            ],
-            "help": "Which theme should be used for output channel"
-        },
-        {
-            "name": "updates-ordering-group",
-            "label": "Post Updates and Ordering",
-            "type": "groupheading"
-        },
-        {
-            "name": "postsPerPage",
-            "label": "Number of posts per page",
-            "type": "number",
-            "default": 10,
-            "help": "Set the number of posts you initially want to show to your readers"
-        },
-        {
-            "name": "postOrder",
-            "label": "Default posts order",
-            "type": "select",
-            "options": [
-                {"value": "editorial", "label": "Editorial"},
-                {"value": "newest_first", "label": "Newest first"},
-                {"value": "oldest_first", "label": "Oldest first"}
-            ],
-            "default": "editorial"
-        },
-        {
-            "name": "autoApplyUpdates",
-            "label": "All updates are auto-applied periodically",
-            "type": "checkbox",
-            "default": true,
-            "help": "Turn off to prompt user to load updates"
+          "value": "bottom",
+          "label": "Bottom"
         }
-    ],
-    "i18n": {
-        "cs": {
-          "Highlights": "Hlavní body",
-          "Comment by": "Komentář",
-          "Powered by": "Poháněno",
-          "Advertisement": "reklama",
-          "Cancel": "Zrušit",
-          "Comment": "Váš příspěvek",
-          "Comment *": "Text *",
-          "Comment should be maximum 300 characters in length": "Maximální délka textu je 300 znaků",
-          "Editorial": "redakční",
-          "Load more posts": "Načíst další",
-          "Loading": "Načítám",
-          "Name *": "Jméno *",
-          "Name should be maximum 30 characters in length": "Maximální délka jména je 30 znaků",
-          "Newest first": "nejnovější",
-          "No posts for now": "Žádné příspěvky",
-          "Oldest first": "nejstarší",
-          "One pinned post": "Jeden připnutý příspěvek",
-          "pinned posts": "připnuté příspěvky",
-          "Post a comment": "Otázka / komentář",
-          "See one new update": "Zobraz 1 nový příspěvek",
-          "See new updates": "Zobraz nové příspěvky",
-          "Send": "Odeslat",
-          "Show all posts": "Zobrazit všechny",
-          "Show highlighted post only": "Zobraz jen zvýrazněné příspěvky",
-          "Sort by:": "Řazení:",
-          "Updated": "Aktualizace",
-          "Your comment was sent for approval": "Váš text byl úspěšně odeslán Čeká na schválení",
-          "credit:": " autor:"
-        }, "de": {
-          "Highlights": "Highlights",
-          "Comment by": "Kommentar von",
-          "Powered by": "Unterstützt von",
-          "Advertisement": "Werbung",
-          "Cancel": "Abbrechen",
-          "Comment": "Kommentar",
-          "Comment *": "Kommentar",
-          "Comment should be maximum 300 characters in length": "Kommentar darf maximal 300 Zeichen lang sein",
-          "Editorial": "Redaktionell",
-          "Load more posts": "Weitere Beiträge",
-          "Loading": "Lade",
-          "Name *": "Name",
-          "Name should be maximum 30 characters in length": "Name darf maximal 30 Zeichen lang sein",
-          "Newest first": "Neueste zuerst",
-          "No posts for now": "Kein Beitrag vorhanden",
-          "Oldest first": "Älteste zuerst",
-          "One pinned post": "Angehefteter Eintrag",
-          "pinned posts": "Angeheftete Einträge",
-          "Please fill in your Comment": "Bitte Kommentar hier eintragen",
-          "Please fill in your Name": "Bitte Namen hier eintragen",
-          "Post a comment": "Kommentar posten",
-          "See one new update": "Neuen Beitrag anzeigen",
-          "See new updates": "Neue Beiträge anzeigen",
-          "Send": "Abschicken",
-          "Show all posts": "Alle Beiträge anzeigen",
-          "Show highlighted post only": "Anzeigen hervorgehoben Beitrag ist nur",
-          "Sort by:": "Ordnen nach",
-          "Updated": "Aktualisiert am",
-          "Your comment was sent for approval": "Ihr Kommentar wartet auf Freischaltung",
-          "credit:": "Bild:"
-        }, "fi": {
-          "Highlights": "Kohokohtia",
-          "Comment by": "Comment by",
-          "Powered by": "Powered by",
-          "Advertisement": "Mainos",
-          "Cancel": "Peruuta",
-          "Comment": "Kommentoi",
-          "Comment *": "Kommentti *",
-          "Comment should be maximum 300 characters in length": "Kommentin enimmäispituus on 300 merkkiä",
-          "Editorial": "Toimituksellinen",
-          "Load more posts": "Lataa lisää julkaisuja",
-          "Loading": "Lataa",
-          "Name *": "Nimi *",
-          "Name should be maximum 30 characters in length": "Nimen enimmäispituus on 30 merkkiä",
-          "Newest first": "Uusimmat ensin",
-          "No posts for now": "Ei uusia julkaisuja",
-          "Oldest first": "Vanhimmat ensin",
-          "One pinned post": "Yksi kiinnitetty julkaisu",
-          "pinned posts": "kiinnitettyä julkaisua",
-          "Please fill in your Comment": "Lisää kommenttisi",
-          "Please fill in your Name": "Lisää nimesi",
-          "Post a comment": "Lähetä kommentti",
-          "See one new update":  "Lataa yksi uusi julkaisu",
-          "See new updates": "Lataa uutta julkaisua",
-          "Send": "Lähetä",
-          "Show all posts": "Näytä kaikki julkaisut",
-          "Show highlighted post only": "Näytä vain korostettu julkaisu",
-          "Sort by:": "Järjestä:",
-          "Updated": "Päivitetty",
-          "Your comment was sent for approval": "Kommenttisi lähetettiin hyväksyttäväksi",
-          "credit:": "©"
-        }, "fr": {
-          "Highlights": "Messages en surbrillance",
-          "Comment by": "Commentaire de",
-          "Powered by": "Alimenté par",
-          "Advertisement": "Publicité",
-          "Cancel": "Annuler",
-          "Comment": "Commentaire",
-          "Comment *": "Commentaire *",
-          "Comment should be maximum 300 characters in length": "Un commentaire ne peut excéder 300 signes",
-          "Editorial": "Éditorial",
-          "Load more posts": "Afficher plus de messages",
-          "Loading": "Chargement",
-          "Name *": "Nom *",
-          "Name should be maximum 30 characters in length": "Le nom ne peut excéder 30 signes",
-          "Newest first": "Le plus récent d'abord",
-          "No posts for now": "Aucun message pour le moment",
-          "Oldest first": "Plus ancien en premier",
-          "One pinned post": "Voir le nouveau message",
-          "pinned posts": "Voir nouveaux messages",
-          "Please fill in your Comment": "Votre commentaire",
-          "Please fill in your Name": "Votre nom",
-          "Post a comment": "Envoyer un commentaire",
-          "See one new update": "Voir le nouveau message",
-          "See new updates": "Voir nouveaux messages",
-          "Send": "Envoyer",
-          "Show all posts": "Afficher tous les messages",
-          "Show highlighted post only": "Afficher uniquement les messages en surbrillance",
-          "Sort by:": "Trier par:",
-          "Updated": "Mise à jour",
-          "Your comment was sent for approval": "Votre commentaire a été envoyé et est en attente de validation",
-          "credit:": "crédit:"
-        }, "nl": {
-          "Highlights": "Highlights",
-          "Comment by": "Commentaar door",
-          "Powered by": "Aangedreven door",
-          "Advertisement": "Advertentie",
-          "Cancel": "Annuleren",
-          "Comment": "Reactie",
-          "Comment *": "Tekst *",
-          "Comment should be maximum 300 characters in length": "Uw reactie van maximaal 300 tekens",
-          "Editorial": "Redactioneel",
-          "Load more posts": "Meer",
-          "Loading": "Laden",
-          "Name *": "Naam *",
-          "Name should be maximum 30 characters in length": "Uw naam kan maximaal 30 tekens lang zijn",
-          "Newest first": "Toon nieuwste eerst",
-          "No posts for now": "Nog geen berichten beschikbaar",
-          "Oldest first": "Toon oudste eerst",
-          "One pinned post": "Bekijk nieuw bericht",
-          "pinned posts": "Bekijk nieuwe berichten",
-          "Please fill in your Comment": "Uw reactie",
-          "Please fill in your Name": "Vul hier uw naam in",
-          "Post a comment": "Schrijf een reactie",
-          "See one new update": "Bekijk nieuw bericht",
-          "See new updates": "Bekijk nieuwe berichten",
-          "Send": "Verzenden",
-          "Sort by:": "Sorteer:",
-          "Your comment was sent for approval": "Uw reactie is ontvangen ter beoordeling",
-          "credit:": "credit:"
-        }, "no": {
-          "Highlights": "Høydepunkter",
-          "Comment by": "Kommentar av",
-          "Powered by": "Drevet av",
-          "Advertisement": "Annonse",
-          "Cancel": "Avbryt",
-          "Comment": "Kommentar",
-          "Comment *": "Kommentar*",
-          "Comment should be maximum 300 characters in length": "Kommentarer kan være inntil 300 tegn",
-          "Editorial": "Redaksjonelt",
-          "Load more posts": "Henter flere poster",
-          "Loading": "Henter",
-          "Name *": "Navn*",
-          "Name should be maximum 30 characters in length": "Navn kan ikke ha mer enn 30 tegn",
-          "Newest first": "Nyeste først",
-          "No posts for now": "Ingen poster for øyeblikket",
-          "Oldest first": "Eldste først",
-          "One pinned post": "Én post festet til toppen",
-          "pinned posts": "poster festet til toppen",
-          "Please fill in your Comment": "Skriv inn din kommentar",
-          "Please fill in your Name": "Skriv inn navn",
-          "Post a comment": "Post en kommentar",
-          "See one new update": "Se én ny oppdatering",
-          "See new updates": "Se nye oppdateringer",
-          "Send": "Send",
-          "Show all posts": "Vis alle poster",
-          "Show highlighted post only": "Vis bare høydepunkter",
-          "Sort by:": "Sortér etter:",
-          "Updated": "Oppdatert",
-          "Your comment was sent for approval": "Din kommentar er sendt til godkjenning",
-          "credit:": "credit:"
-        }, "ro": {
-          "Highlights": "Repere",
-          "Comment by": "Comentariu de",
-          "Powered by": "Cu sprijinul",
-          "Advertisement": "Reclamă",
-          "Cancel": "Anulează",
-          "Comment": "Comentează",
-          "Comment *": "Comentariu *",
-          "Comment should be maximum 300 characters in length": "Comentariu nu poate fi mai lung de 300 de caractere",
-          "Editorial": "Editorial",
-          "Load more posts": "Încarcă mai multe posturi",
-          "Loading": "Se încarcă",
-          "Name *": "Numele *",
-          "Name should be maximum 30 characters in length": "Numele nu poate fi mai lung de 30 de caractere",
-          "Newest first": "Cele mai noi",
-          "No posts for now": "Deocamdata nu sunt articole",
-          "Oldest first": "Cele mai vechi",
-          "One pinned post": "Vezi un articol nou",
-          "pinned posts": "Vezi articole noi",
-          "Please fill in your Comment": "Completează comentariu",
-          "Please fill in your Name": "Completează numele",
-          "Post a comment": "Scrie un comentariu",
-          "See one new update": "Vezi un articol nou",
-          "See new updates": "Vezi articole noi",
-          "Send": "Trimite",
-          "Sort by:": "Ordonează după:",
-          "Your comment was sent for approval": "Comentariul tău a fost trimis spre aprobare",
-          "credit:": "credit:"
-        }, "sv": {
-            "Highlights": "Höjdpunkter",
-            "Comment by": "Kommentar av",
-            "Powered by": "Powered by",
-            "Advertisement": "Reklam",
-            "Cancel": "Avbryt",
-            "Comment": "Kommentar",
-            "Comment *": "Kommentar",
-            "Comment should be maximum 300 characters in length": "Kommentaren får vara högst 300 tecken",
-            "Editorial": "Redaktionellt material",
-            "Load more posts": "Ladda fler inlägg",
-            "Loading": "Laddar",
-            "Name ": "Namn",
-            "Name *": "Namn",
-            "Name should be maximum 30 characters in length": "Namnet får bestå av upp till 30 tecken",
-            "Newest first": "Nyaste först",
-            "No posts for now": "Inga inlägg just nu",
-            "Oldest first": "Äldsta först",
-            "One pinned post": "Ett inlägg fastnålat",
-            "pinned posts": "fastnålade inlägg",
-            "Please fill in your Comment": "Fyll i din kommentar",
-            "Please fill in your Name": "Fyll i ditt namn",
-            "Post a comment": "Skicka en kommentar",
-            "See one new update": "Se ett nytt inlägg",
-            "See new updates": "Se nya inlägg",
-            "Send": "Sänd",
-            "Show all posts": "Visa alla inlägg",
-            "Show highlighted post only": "Visa endast höjdpunkter",
-            "Sort by:": "Sortera enligt:",
-            "Updated": "Uppdaterat",
-            "Your comment was sent for approval": "Din kommentar väntar på att godkännas",
-            "credit:": "källa:"
-        }, "sr": {
-            "Highlights": "Najvažnije",
-            "Comment by": "Komentar postavio",
-            "Powered by": "Ovo je",
-            "Advertisement": "Reklama",
-            "Cancel": "Otkaži",
-            "Comment": "Komentar",
-            "Comment *": "Komentar *",
-            "Comment should be maximum 300 characters in length": "Komentar je ograničen na 300 karaktera",
-            "Editorial": "Izbor urednika",
-            "Load more posts": "Učitaj još postova",
-            "Loading": "Učitavanje",
-            "Name *": "Ime *",
-            "Name should be maximum 30 characters in length": "Ime je ograničeno na 30 karaktera",
-            "Newest first": "Od najnovijeg",
-            "No posts for now": "Za sada nema postova",
-            "Oldest first": "Od najstarijeg",
-            "One pinned post": "Jedan istaknut post",
-            "pinned posts": "istaknuti postovi",
-            "Please fill in your Comment": "Molimo unesite vaš komentar",
-            "Please fill in your Name": "Molimo unesite vaše ime",
-            "Post a comment": "Postavite komentar",
-            "See one new update": "Pogledajte novi post",
-            "See new updates": "Pogledajte nove postove",
-            "Send": "Pošalji",
-            "Show all posts": "Prikaži sve postove",
-            "Show highlighted post only": "Prikaži najvažnije postove",
-            "Sort by:": "Sortiraj:",
-            "Updated": "Ažurirano",
-            "Your comment was sent for approval": "Vaš komentar je poslat na odobrenje",
-            "credit:": "autor:"
-        }, "sr-cy": {
-            "Highlights": "Најважније",
-            "Comment by": "Коментар поставио",
-            "Powered by": "Ово је",
-            "Advertisement": "Реклама",
-            "Cancel": "Откажи",
-            "Comment": "Коментар",
-            "Comment *": "Коментар *",
-            "Comment should be maximum 300 characters in length": "Коментар је ограничен на 300 карактера",
-            "Editorial": "Избор уредника",
-            "Load more posts": "Учитај још постова",
-            "Loading": "Учитавење",
-            "Name *": "Име *",
-            "Name should be maximum 30 characters in length": "Име је ограничено на 30 карактера",
-            "Newest first": "Од најновијег",
-            "No posts for now": "За сада нема постова",
-            "Oldest first": "Од најстаријег",
-            "One pinned post": "Један истакнут пост",
-            "pinned posts": "истакнути постови",
-            "Please fill in your Comment": "Молимо унесите ваш коментар",
-            "Please fill in your Name": "Молимо унесите ваше име",
-            "Post a comment": "Поставите коментар",
-            "See one new update": "Погледајте нови пост",
-            "See new updates": "Погледајте нове постове",
-            "Send": "Пошаљи",
-            "Show all posts": "Прикажи све постове",
-            "Show highlighted post only": "Прикажи најважније постове",
-            "Sort by:": "Сортирај:",
-            "Updated": "Ажурирано",
-            "Your comment was sent for approval": "Ваш коментар је послат на одобрење",
-            "credit:": "аутор:"
+      ],
+      "dependsOn": {
+        "showAuthor": true
+      },
+      "help": "Where to show author info"
+    },
+    {
+      "name": "showAuthorAvatar",
+      "label": "Show author avatar",
+      "type": "checkbox",
+      "default": true,
+      "dependsOn": {
+        "showAuthor": true
+      },
+      "help": "Shows an author image besides the author name"
+    },
+    {
+      "name": "showSyndicatedAuthor",
+      "label": "Show syndicated author",
+      "type": "checkbox",
+      "default": false,
+      "isAdvanced": true,
+      "help": "If the users will see the syndicated author"
+    },
+    {
+      "name": "posts-options-group",
+      "label": "Show or hide posts options",
+      "type": "groupheading"
+    },
+    {
+      "name": "stickyPosition",
+      "label": "Pinned post behaviour",
+      "type": "select",
+      "options": [
+        { "value": "bottom", "label": "Show below menu bar" },
+        { "value": "top", "label": "Show above menu bar" }
+      ],
+      "default": "bottom",
+      "help": "Please note: Pinned posts above the menu bar will not show the author info nor a timestamp. This setting is especially useful if you want to show a (streaming) video on top of your timeline."
+    },
+    {
+      "name": "showGallery",
+      "label": "Show slideshow gallery",
+      "type": "checkbox",
+      "default": false,
+      "help": "Multiple image posts will show up as an image gallery"
+    },
+    {
+      "name": "showSharingButtons",
+      "label": "Show social media sharing buttons",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "name": "showPermalinkButton",
+      "label": "Show permalink button",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "name": "permalinkDelimiter",
+      "label": "Permalink delimiter",
+      "type": "select",
+      "isAdvanced": true,
+      "options": [
+        {
+          "value": "?",
+          "label": "Query delimiter (?)"
+        },
+        {
+          "value": "#",
+          "label": " Fragment identifier delimiter (#)"
         }
+      ],
+      "default": "?",
+      "help": "Sets the delimiter used to send the permalink. ex: permalinkHashMark=?, http://example.com/?..."
+    },
+    {
+      "name": "visibility-group",
+      "label": "Blog visibility",
+      "type": "groupheading"
+    },
+    {
+      "name": "blockSearchEngines",
+      "label": "Block search engines",
+      "type": "checkbox",
+      "default": true,
+      "help": "Will block search engines from indexing the blog content"
+    },
+    {
+      "name": "gaCode",
+      "label": "Google analytics code",
+      "type": "text",
+      "placeholder": "UA-XXXXX-Y",
+      "default": "",
+      "help": "Please enter your google analytics account ID."
+    },
+    {
+      "name": "data-privacy-group",
+      "label": "Data Privacy Options",
+      "type": "groupheading",
+      "isAdvanced": true
+    },
+    {
+      "name": "youtubePrivateMode",
+      "label": "Youtube privacy-enhanced mode",
+      "type": "checkbox",
+      "help": "Always use non tracking version of Youtube embeds",
+      "default": false,
+      "isAdvanced": true
+    },
+    {
+      "name": "twitterDNT",
+      "label": "Twitter - do not track",
+      "type": "checkbox",
+      "help": "You can opt out of having information from your website used for personalization.",
+      "default": false,
+      "isAdvanced": true
+    },
+    {
+      "name": "edge-server-side-group",
+      "label": "Edge or Server Side Include Options",
+      "type": "groupheading",
+      "isAdvanced": true
+    },
+    {
+      "name": "renderForESI",
+      "label": "Optimise the Live Blog output for ESI",
+      "type": "checkbox",
+      "default": false,
+      "help": "Strips the head and body tags from the Live Blog output to publish it using Edge Side Includes",
+      "isAdvanced": true
+    },
+    {
+      "name": "removeStylesESI",
+      "label": "Remove stylesheet from the Live Blog output for ESI",
+      "type": "checkbox",
+      "default": false,
+      "help": "Removes the link to the stylesheet from the Live Blog output to publish it using Edge Side Includes",
+      "isAdvanced": true
+    },
+    {
+      "name": "outputChannel",
+      "label": "Output Channel",
+      "type": "checkbox",
+      "default": false,
+      "help": "Turn on to create the output channel automatically",
+      "isAdvanced": true
+    },
+    {
+      "name": "outputChannelName",
+      "label": "Output channel name",
+      "type": "text",
+      "dependsOn": {
+        "outputChannel": true
+      },
+      "help": "Enter the output channel name",
+      "isAdvanced": true
+    },
+    {
+      "name": "outputChannelTheme",
+      "label": "Output channel theme",
+      "type": "select",
+      "default": "amp",
+      "dependsOn": {
+        "outputChannel": true
+      },
+      "isAdvanced": true,
+      "options": [
+        { "value": "classic", "label": "Classic Theme" },
+        { "value": "default", "label": "Liveblog 3 Default SEO Theme" },
+        { "value": "amp", "label": "Liveblog 3 AMP Theme" }
+      ],
+      "help": "Which theme should be used for output channel"
+    },
+    {
+      "name": "updates-ordering-group",
+      "label": "Post Updates and Ordering",
+      "type": "groupheading"
+    },
+    {
+      "name": "postsPerPage",
+      "label": "Number of posts per page",
+      "type": "number",
+      "default": 10,
+      "help": "Set the number of posts you initially want to show to your readers"
+    },
+    {
+      "name": "postOrder",
+      "label": "Default posts order",
+      "type": "select",
+      "options": [
+        { "value": "editorial", "label": "Editorial" },
+        { "value": "newest_first", "label": "Newest first" },
+        { "value": "oldest_first", "label": "Oldest first" }
+      ],
+      "default": "editorial"
+    },
+    {
+      "name": "autoApplyUpdates",
+      "label": "All updates are auto-applied periodically",
+      "type": "checkbox",
+      "default": true,
+      "help": "Turn off to prompt user to load updates"
     }
+  ],
+  "i18n": {
+    "cs": {
+      "Highlights": "Hlavní body",
+      "Comment by": "Komentář",
+      "Powered by": "Poháněno",
+      "Advertisement": "reklama",
+      "Cancel": "Zrušit",
+      "Comment": "Váš příspěvek",
+      "Comment *": "Text *",
+      "Comment should be maximum 300 characters in length": "Maximální délka textu je 300 znaků",
+      "Editorial": "redakční",
+      "Load more posts": "Načíst další",
+      "Loading": "Načítám",
+      "Name *": "Jméno *",
+      "Name should be maximum 30 characters in length": "Maximální délka jména je 30 znaků",
+      "Newest first": "nejnovější",
+      "No posts for now": "Žádné příspěvky",
+      "Oldest first": "nejstarší",
+      "One pinned post": "Jeden připnutý příspěvek",
+      "pinned posts": "připnuté příspěvky",
+      "Post a comment": "Otázka / komentář",
+      "See one new update": "Zobraz 1 nový příspěvek",
+      "See new updates": "Zobraz nové příspěvky",
+      "Send": "Odeslat",
+      "Show all posts": "Zobrazit všechny",
+      "Show highlighted post only": "Zobraz jen zvýrazněné příspěvky",
+      "Sort by:": "Řazení:",
+      "Updated": "Aktualizace",
+      "Your comment was sent for approval": "Váš text byl úspěšně odeslán Čeká na schválení",
+      "credit:": " autor:"
+    },
+    "de": {
+      "Highlights": "Highlights",
+      "Comment by": "Kommentar von",
+      "Powered by": "Unterstützt von",
+      "Advertisement": "Werbung",
+      "Cancel": "Abbrechen",
+      "Comment": "Kommentar",
+      "Comment *": "Kommentar",
+      "Comment should be maximum 300 characters in length": "Kommentar darf maximal 300 Zeichen lang sein",
+      "Editorial": "Redaktionell",
+      "Load more posts": "Weitere Beiträge",
+      "Loading": "Lade",
+      "Name *": "Name",
+      "Name should be maximum 30 characters in length": "Name darf maximal 30 Zeichen lang sein",
+      "Newest first": "Neueste zuerst",
+      "No posts for now": "Kein Beitrag vorhanden",
+      "Oldest first": "Älteste zuerst",
+      "One pinned post": "Angehefteter Eintrag",
+      "pinned posts": "Angeheftete Einträge",
+      "Please fill in your Comment": "Bitte Kommentar hier eintragen",
+      "Please fill in your Name": "Bitte Namen hier eintragen",
+      "Post a comment": "Kommentar posten",
+      "See one new update": "Neuen Beitrag anzeigen",
+      "See new updates": "Neue Beiträge anzeigen",
+      "Send": "Abschicken",
+      "Show all posts": "Alle Beiträge anzeigen",
+      "Show highlighted post only": "Anzeigen hervorgehoben Beitrag ist nur",
+      "Sort by:": "Ordnen nach",
+      "Updated": "Aktualisiert am",
+      "Your comment was sent for approval": "Ihr Kommentar wartet auf Freischaltung",
+      "credit:": "Bild:"
+    },
+    "fi": {
+      "Highlights": "Kohokohtia",
+      "Comment by": "Comment by",
+      "Powered by": "Powered by",
+      "Advertisement": "Mainos",
+      "Cancel": "Peruuta",
+      "Comment": "Kommentoi",
+      "Comment *": "Kommentti *",
+      "Comment should be maximum 300 characters in length": "Kommentin enimmäispituus on 300 merkkiä",
+      "Editorial": "Toimituksellinen",
+      "Load more posts": "Lataa lisää julkaisuja",
+      "Loading": "Lataa",
+      "Name *": "Nimi *",
+      "Name should be maximum 30 characters in length": "Nimen enimmäispituus on 30 merkkiä",
+      "Newest first": "Uusimmat ensin",
+      "No posts for now": "Ei uusia julkaisuja",
+      "Oldest first": "Vanhimmat ensin",
+      "One pinned post": "Yksi kiinnitetty julkaisu",
+      "pinned posts": "kiinnitettyä julkaisua",
+      "Please fill in your Comment": "Lisää kommenttisi",
+      "Please fill in your Name": "Lisää nimesi",
+      "Post a comment": "Lähetä kommentti",
+      "See one new update": "Lataa yksi uusi julkaisu",
+      "See new updates": "Lataa uutta julkaisua",
+      "Send": "Lähetä",
+      "Show all posts": "Näytä kaikki julkaisut",
+      "Show highlighted post only": "Näytä vain korostettu julkaisu",
+      "Sort by:": "Järjestä:",
+      "Updated": "Päivitetty",
+      "Your comment was sent for approval": "Kommenttisi lähetettiin hyväksyttäväksi",
+      "credit:": "©"
+    },
+    "fr": {
+      "Highlights": "Messages en surbrillance",
+      "Comment by": "Commentaire de",
+      "Powered by": "Alimenté par",
+      "Advertisement": "Publicité",
+      "Cancel": "Annuler",
+      "Comment": "Commentaire",
+      "Comment *": "Commentaire *",
+      "Comment should be maximum 300 characters in length": "Un commentaire ne peut excéder 300 signes",
+      "Editorial": "Éditorial",
+      "Load more posts": "Afficher plus de messages",
+      "Loading": "Chargement",
+      "Name *": "Nom *",
+      "Name should be maximum 30 characters in length": "Le nom ne peut excéder 30 signes",
+      "Newest first": "Le plus récent d'abord",
+      "No posts for now": "Aucun message pour le moment",
+      "Oldest first": "Plus ancien en premier",
+      "One pinned post": "Voir le nouveau message",
+      "pinned posts": "Voir nouveaux messages",
+      "Please fill in your Comment": "Votre commentaire",
+      "Please fill in your Name": "Votre nom",
+      "Post a comment": "Envoyer un commentaire",
+      "See one new update": "Voir le nouveau message",
+      "See new updates": "Voir nouveaux messages",
+      "Send": "Envoyer",
+      "Show all posts": "Afficher tous les messages",
+      "Show highlighted post only": "Afficher uniquement les messages en surbrillance",
+      "Sort by:": "Trier par:",
+      "Updated": "Mise à jour",
+      "Your comment was sent for approval": "Votre commentaire a été envoyé et est en attente de validation",
+      "credit:": "crédit:"
+    },
+    "nl": {
+      "Highlights": "Highlights",
+      "Comment by": "Commentaar door",
+      "Powered by": "Aangedreven door",
+      "Advertisement": "Advertentie",
+      "Cancel": "Annuleren",
+      "Comment": "Reactie",
+      "Comment *": "Tekst *",
+      "Comment should be maximum 300 characters in length": "Uw reactie van maximaal 300 tekens",
+      "Editorial": "Redactioneel",
+      "Load more posts": "Meer",
+      "Loading": "Laden",
+      "Name *": "Naam *",
+      "Name should be maximum 30 characters in length": "Uw naam kan maximaal 30 tekens lang zijn",
+      "Newest first": "Toon nieuwste eerst",
+      "No posts for now": "Nog geen berichten beschikbaar",
+      "Oldest first": "Toon oudste eerst",
+      "One pinned post": "Bekijk nieuw bericht",
+      "pinned posts": "Bekijk nieuwe berichten",
+      "Please fill in your Comment": "Uw reactie",
+      "Please fill in your Name": "Vul hier uw naam in",
+      "Post a comment": "Schrijf een reactie",
+      "See one new update": "Bekijk nieuw bericht",
+      "See new updates": "Bekijk nieuwe berichten",
+      "Send": "Verzenden",
+      "Sort by:": "Sorteer:",
+      "Your comment was sent for approval": "Uw reactie is ontvangen ter beoordeling",
+      "credit:": "credit:"
+    },
+    "no": {
+      "Highlights": "Høydepunkter",
+      "Comment by": "Kommentar av",
+      "Powered by": "Drevet av",
+      "Advertisement": "Annonse",
+      "Cancel": "Avbryt",
+      "Comment": "Kommentar",
+      "Comment *": "Kommentar*",
+      "Comment should be maximum 300 characters in length": "Kommentarer kan være inntil 300 tegn",
+      "Editorial": "Redaksjonelt",
+      "Load more posts": "Henter flere poster",
+      "Loading": "Henter",
+      "Name *": "Navn*",
+      "Name should be maximum 30 characters in length": "Navn kan ikke ha mer enn 30 tegn",
+      "Newest first": "Nyeste først",
+      "No posts for now": "Ingen poster for øyeblikket",
+      "Oldest first": "Eldste først",
+      "One pinned post": "Én post festet til toppen",
+      "pinned posts": "poster festet til toppen",
+      "Please fill in your Comment": "Skriv inn din kommentar",
+      "Please fill in your Name": "Skriv inn navn",
+      "Post a comment": "Post en kommentar",
+      "See one new update": "Se én ny oppdatering",
+      "See new updates": "Se nye oppdateringer",
+      "Send": "Send",
+      "Show all posts": "Vis alle poster",
+      "Show highlighted post only": "Vis bare høydepunkter",
+      "Sort by:": "Sortér etter:",
+      "Updated": "Oppdatert",
+      "Your comment was sent for approval": "Din kommentar er sendt til godkjenning",
+      "credit:": "credit:"
+    },
+    "ro": {
+      "Highlights": "Repere",
+      "Comment by": "Comentariu de",
+      "Powered by": "Cu sprijinul",
+      "Advertisement": "Reclamă",
+      "Cancel": "Anulează",
+      "Comment": "Comentează",
+      "Comment *": "Comentariu *",
+      "Comment should be maximum 300 characters in length": "Comentariu nu poate fi mai lung de 300 de caractere",
+      "Editorial": "Editorial",
+      "Load more posts": "Încarcă mai multe posturi",
+      "Loading": "Se încarcă",
+      "Name *": "Numele *",
+      "Name should be maximum 30 characters in length": "Numele nu poate fi mai lung de 30 de caractere",
+      "Newest first": "Cele mai noi",
+      "No posts for now": "Deocamdata nu sunt articole",
+      "Oldest first": "Cele mai vechi",
+      "One pinned post": "Vezi un articol nou",
+      "pinned posts": "Vezi articole noi",
+      "Please fill in your Comment": "Completează comentariu",
+      "Please fill in your Name": "Completează numele",
+      "Post a comment": "Scrie un comentariu",
+      "See one new update": "Vezi un articol nou",
+      "See new updates": "Vezi articole noi",
+      "Send": "Trimite",
+      "Sort by:": "Ordonează după:",
+      "Your comment was sent for approval": "Comentariul tău a fost trimis spre aprobare",
+      "credit:": "credit:"
+    },
+    "sv": {
+      "Highlights": "Höjdpunkter",
+      "Comment by": "Kommentar av",
+      "Powered by": "Powered by",
+      "Advertisement": "Reklam",
+      "Cancel": "Avbryt",
+      "Comment": "Kommentar",
+      "Comment *": "Kommentar",
+      "Comment should be maximum 300 characters in length": "Kommentaren får vara högst 300 tecken",
+      "Editorial": "Redaktionellt material",
+      "Load more posts": "Ladda fler inlägg",
+      "Loading": "Laddar",
+      "Name ": "Namn",
+      "Name *": "Namn",
+      "Name should be maximum 30 characters in length": "Namnet får bestå av upp till 30 tecken",
+      "Newest first": "Nyaste först",
+      "No posts for now": "Inga inlägg just nu",
+      "Oldest first": "Äldsta först",
+      "One pinned post": "Ett inlägg fastnålat",
+      "pinned posts": "fastnålade inlägg",
+      "Please fill in your Comment": "Fyll i din kommentar",
+      "Please fill in your Name": "Fyll i ditt namn",
+      "Post a comment": "Skicka en kommentar",
+      "See one new update": "Se ett nytt inlägg",
+      "See new updates": "Se nya inlägg",
+      "Send": "Sänd",
+      "Show all posts": "Visa alla inlägg",
+      "Show highlighted post only": "Visa endast höjdpunkter",
+      "Sort by:": "Sortera enligt:",
+      "Updated": "Uppdaterat",
+      "Your comment was sent for approval": "Din kommentar väntar på att godkännas",
+      "credit:": "källa:"
+    },
+    "sr": {
+      "Highlights": "Najvažnije",
+      "Comment by": "Komentar postavio",
+      "Powered by": "Ovo je",
+      "Advertisement": "Reklama",
+      "Cancel": "Otkaži",
+      "Comment": "Komentar",
+      "Comment *": "Komentar *",
+      "Comment should be maximum 300 characters in length": "Komentar je ograničen na 300 karaktera",
+      "Editorial": "Izbor urednika",
+      "Load more posts": "Učitaj još postova",
+      "Loading": "Učitavanje",
+      "Name *": "Ime *",
+      "Name should be maximum 30 characters in length": "Ime je ograničeno na 30 karaktera",
+      "Newest first": "Od najnovijeg",
+      "No posts for now": "Za sada nema postova",
+      "Oldest first": "Od najstarijeg",
+      "One pinned post": "Jedan istaknut post",
+      "pinned posts": "istaknuti postovi",
+      "Please fill in your Comment": "Molimo unesite vaš komentar",
+      "Please fill in your Name": "Molimo unesite vaše ime",
+      "Post a comment": "Postavite komentar",
+      "See one new update": "Pogledajte novi post",
+      "See new updates": "Pogledajte nove postove",
+      "Send": "Pošalji",
+      "Show all posts": "Prikaži sve postove",
+      "Show highlighted post only": "Prikaži najvažnije postove",
+      "Sort by:": "Sortiraj:",
+      "Updated": "Ažurirano",
+      "Your comment was sent for approval": "Vaš komentar je poslat na odobrenje",
+      "credit:": "autor:"
+    },
+    "sr-cy": {
+      "Highlights": "Најважније",
+      "Comment by": "Коментар поставио",
+      "Powered by": "Ово је",
+      "Advertisement": "Реклама",
+      "Cancel": "Откажи",
+      "Comment": "Коментар",
+      "Comment *": "Коментар *",
+      "Comment should be maximum 300 characters in length": "Коментар је ограничен на 300 карактера",
+      "Editorial": "Избор уредника",
+      "Load more posts": "Учитај још постова",
+      "Loading": "Учитавење",
+      "Name *": "Име *",
+      "Name should be maximum 30 characters in length": "Име је ограничено на 30 карактера",
+      "Newest first": "Од најновијег",
+      "No posts for now": "За сада нема постова",
+      "Oldest first": "Од најстаријег",
+      "One pinned post": "Један истакнут пост",
+      "pinned posts": "истакнути постови",
+      "Please fill in your Comment": "Молимо унесите ваш коментар",
+      "Please fill in your Name": "Молимо унесите ваше име",
+      "Post a comment": "Поставите коментар",
+      "See one new update": "Погледајте нови пост",
+      "See new updates": "Погледајте нове постове",
+      "Send": "Пошаљи",
+      "Show all posts": "Прикажи све постове",
+      "Show highlighted post only": "Прикажи најважније постове",
+      "Sort by:": "Сортирај:",
+      "Updated": "Ажурирано",
+      "Your comment was sent for approval": "Ваш коментар је послат на одобрење",
+      "credit:": "аутор:"
+    }
+  }
 }

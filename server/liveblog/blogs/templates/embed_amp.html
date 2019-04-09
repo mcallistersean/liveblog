@@ -27,7 +27,6 @@
     <script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
     <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
     <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-    <script async custom-element="amp-timeago" src="https://cdn.ampproject.org/v0/amp-timeago-0.1.js"></script>
     <script async custom-element="amp-brightcove" src="https://cdn.ampproject.org/v0/amp-brightcove-0.1.js"></script>
     {% if settings.canComment %}
       <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
@@ -35,7 +34,7 @@
       <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
     {% endif %}
     <!-- google analytics -->
-    {% if settings.gaCode %}
+    {% if settings.gaCode or hook_urls %}
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     {% endif %}
     <!-- end google analytics -->
@@ -82,6 +81,28 @@
 </amp-analytics>
 <!-- end google analytics -->
 {% endif -%}
+
+{% if hook_urls %}
+<amp-analytics>
+<script type="application/json">
+{
+  "requests": {
+    "pageview": "{{api_host}}api/analytics/hit?amp=1&context_url=${documentReferrer}&blog_id=${blog_id}"
+  },
+  "triggers": {
+    "trackPageview": {
+      "on": "visible",
+      "request": "pageview"
+    }
+  },
+  "vars": {
+    "blog_id": "{{blog._id}}"
+  }
+}
+</script>
+</amp-analytics>
+{% endif %}
+
 <!-- esi -->
 {% if not settings.renderForESI %}
   </body>

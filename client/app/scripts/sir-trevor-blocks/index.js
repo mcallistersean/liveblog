@@ -13,6 +13,7 @@ import _ from 'lodash';
 import sanitizeHtml from 'sanitize-html';
 
 import imageBlock from './image-block';
+import videoBlock from './video-block';
 import handlePlaceholder from './handle-placeholder';
 import sanitizeConfig from './sanitizer-config';
 
@@ -114,6 +115,24 @@ function cleanupURL(string) {
     return string;
 }
 
+/**
+ * Simple function is intended to escape _ characters from html tag attributes
+ * before passing the content to SirTrevor.toHTML function. SirTrevors screws up underscores
+ * and replace them with <i> tags like if it was markdown
+ *
+ * This is long time known issue. Check https://dev.sourcefabric.org/browse/LBSD-2353
+ * and connected issues.
+ * @param {string} htmlString
+ */
+function escapeUnderscore(htmlString) {
+    // SirTrevor won't match this and then it will replace them with _
+    const tripleBackslashEscape = '\\\_'; // eslint-disable-line
+    const tagAttrs = /(\S+)\s*=\s*([']|["])([\W\w]*?)\2/gm;
+
+    return htmlString
+        .replace(tagAttrs, (match) => match.replace(/_/g, tripleBackslashEscape));
+}
+
 function replaceEmbedWithUrl(string) {
     var m;
 
@@ -158,6 +177,7 @@ angular
 
             return instance ? instance.options : null;
         };
+
         SirTrevor.Blocks.Embed = SirTrevor.Block.extend({
             type: 'embed',
             data: {},
@@ -174,6 +194,7 @@ angular
                 var self = this;
 
                 // create and trigger a 'change' event for the $editor which is a contenteditable
+
                 this.$editor.filter('[contenteditable]').on('focus', function(ev) {
                     const $this = $(this);
 
@@ -195,6 +216,7 @@ angular
                         .trim();
 
                     // exit if the input field is empty
+
                     if (_.isEmpty(input)) {
                         self.getOptions().disableSubmit(true);
                         return false;
@@ -340,7 +362,7 @@ angular
                 }
 
                 fixSocial(html, data);
-                // retrieve the final html code
+
                 let htmlToReturn = '';
 
                 htmlToReturn = '<div class="' + cardClass + '">';
@@ -358,7 +380,6 @@ angular
                 self.$('.embed-input')
                     .addClass('hidden')
                     .after(self.renderCard(data));
-                // set somes fields contenteditable
                 ['title', 'description', 'credit'].forEach((fieldName) => {
                     self.$('.' + fieldName + '-preview').attr({
                         contenteditable: true,
@@ -374,7 +395,6 @@ angular
                 } else {
                     this.ready();
                 }
-                // add a link to remove/show the cover
                 const $coverHandler = this.$('.cover-preview-handler');
 
                 if ($coverHandler.length > 0 && !$coverHandler.hasClass('hidden')) {
@@ -420,6 +440,7 @@ angular
                 return this.retrieveData();
             },
         });
+
         SirTrevor.Blocks.Quote = SirTrevor.Block.extend({
             type: 'quote',
             title: function() {
@@ -524,8 +545,12 @@ angular
 
         SirTrevor.Blocks.Image = imageBlock(SirTrevor, config);
 
+        SirTrevor.Blocks.Video = videoBlock(SirTrevor, config);
+
         SirTrevor.Blocks.Text.prototype.loadData = function(data) {
-            this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
+            let htmlContent = escapeUnderscore(data.text);
+
+            this.getTextBlock().html(SirTrevor.toHTML(htmlContent, this.type));
         };
 
         SirTrevor.Blocks.Text.prototype.toMeta = function() {
@@ -621,7 +646,9 @@ angular
             icon_name: 'comment',
 
             loadData: function(data) {
-                this.getTextBlock().html(SirTrevor.toHTML(data.text, this.type));
+                let htmlContent = escapeUnderscore(data.text);
+
+                this.getTextBlock().html(SirTrevor.toHTML(htmlContent, this.type));
             },
             isEmpty: function() {
                 return _.isEmpty(this.getData().text);

@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
   "default.css": "default-6687c253f9.css",
   "default.js": "default-3f8a48ec97.js"
+=======
+  "default.css": "default-60c22e8702.css",
+  "default.js": "default-34e9355502.js"
+>>>>>>> 9e78a72cfe2e365b5df444dc72378e197e1ac34b
 }
