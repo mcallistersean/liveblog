@@ -10,6 +10,7 @@ const dateFilter = require("nunjucks-date-filter");
 const gutil = require("gulp-util");
 const { ThemeTemplatesLoader } = require("liveblog-shared-tools");
 const { ampifyFilter, addtenFilter } = require("./misc/filters");
+const gdpr = require("./js/theme/gdpr");
 
 // import all gulp tasks
 const { ampValidate } = require("./tasks/amp");
@@ -139,6 +140,7 @@ dateFilter.setDefaultFormat("dddd, MMMM Do, YYYY, h:MM:ss A");
 nunjucksEnv.addFilter("date", dateFilter);
 nunjucksEnv.addFilter("ampify", ampifyFilter);
 nunjucksEnv.addFilter("addten", addtenFilter);
+nunjucksEnv.addFilter("gdpr", gdpr.hasGDPRCookie);
 
 // TODO: add docstrings after merge default theme refactor
 const ampSupport = item => {

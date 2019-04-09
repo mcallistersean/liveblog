@@ -2,16 +2,21 @@
  * @author ps / @___paul
  */
 
-'use strict';
+"use strict";
 
-const helpers = require('./helpers');
-const adsManager = require('./ads-manager');
-const Slideshow = require('./slideshow');
-const Permalink = require('./permalink');
-const nunjucks = require('nunjucks/browser/nunjucks-slim');
+const helpers = require("./helpers");
+const adsManager = require("./ads-manager");
+const Slideshow = require("./slideshow");
+const Permalink = require("./permalink");
+const nunjucks = require("nunjucks/browser/nunjucks-slim");
+const gdpr = require("./gdpr").default;
 
+console.log(gdpr.hasGDPRCookie);
+
+// set up the nunjucks environment
 const nunjucksEnv = new nunjucks.Environment();
-nunjucksEnv.addFilter('date', helpers.convertTimestamp);
+nunjucksEnv.addFilter("date", helpers.convertTimestamp);
+nunjucksEnv.addFilter("gdpr", gdpr.hasGDPRCookie);
 nunjucks.env = nunjucksEnv;
 
 const permalink = new Permalink();
@@ -30,22 +35,26 @@ const els = {
 function renderTimeline(api_response) {
   var renderedPosts = [];
   // for translation macro purposes
-  var optionsObj = {i18n: window.LB.i18n};
+  var optionsObj = { i18n: window.LB.i18n };
 
-  api_response._items.forEach((post) => {
+  api_response._items.forEach(post => {
     renderedPosts.push(
-      nunjucks.env.render('template-post.html', {
+      nunjucks.env.render("template-post.html", {
         item: post,
         options: optionsObj,
         settings: window.LB.settings,
         assets_root: window.LB.assets_root
       })
     );
-
   });
 
-  els.emptyMessage.classList.toggle('mod--displaynone', Boolean(renderedPosts.length));
-  els.timelineNormal.innerHTML = renderedPosts.length ? renderedPosts.join('') : '';
+  els.emptyMessage.classList.toggle(
+    "mod--displaynone",
+    Boolean(renderedPosts.length)
+  );
+  els.timelineNormal.innerHTML = renderedPosts.length
+    ? renderedPosts.join("")
+    : "";
 
   updateTimestamps();
   loadEmbeds();
@@ -61,25 +70,31 @@ function renderTimeline(api_response) {
  * @property {Object} requestOpts - API request params.
  */
 function renderPosts(api_response) {
-  var renderedPosts = [] // temporary store
-    , posts = api_response._items;
+  var renderedPosts = [], // temporary store
+    posts = api_response._items;
 
   for (var i = 0; i < posts.length; i++) {
     var post = posts[i];
 
-    if (!api_response.requestOpts.page && (post.deleted || post.post_status === 'submitted')) {
+    if (
+      !api_response.requestOpts.page &&
+      (post.deleted || post.post_status === "submitted")
+    ) {
       deletePost(post._id);
       continue; // early
     }
     const elem = document.querySelector(`[data-post-id="${post._id}"]`);
-    const isVideoPlaying = Object.values(window.playersState).some(x => x === true);
-    const displaynone = api_response.requestOpts.fromDate &&
-                        (!window.LB.settings.autoApplyUpdates || isVideoPlaying) &&
-                        !elem;
+    const isVideoPlaying = Object.values(window.playersState).some(
+      x => x === true
+    );
+    const displaynone =
+      api_response.requestOpts.fromDate &&
+      (!window.LB.settings.autoApplyUpdates || isVideoPlaying) &&
+      !elem;
     // for translation macro purposes
-    var optionsObj = {i18n: window.LB.i18n};
+    var optionsObj = { i18n: window.LB.i18n };
 
-    const rendered = nunjucks.env.render('template-post.html', {
+    const rendered = nunjucks.env.render("template-post.html", {
       item: post,
       settings: window.LB.settings,
       options: optionsObj,
@@ -87,7 +102,7 @@ function renderPosts(api_response) {
       displaynone: displaynone
     });
 
-    if ( updatePost(post, rendered) ) {
+    if (updatePost(post, rendered)) {
       continue;
     }
     renderedPosts.push({ html: rendered, data: post }); // create operation
@@ -97,8 +112,14 @@ function renderPosts(api_response) {
     return; // early
   }
 
-  els.emptyMessage.classList.toggle('mod--displaynone', Boolean(renderedPosts.length));
-  addPosts(renderedPosts, api_response.requestOpts.fromDate ? 'afterbegin' : 'beforeend');
+  els.emptyMessage.classList.toggle(
+    "mod--displaynone",
+    Boolean(renderedPosts.length)
+  );
+  addPosts(
+    renderedPosts,
+    api_response.requestOpts.fromDate ? "afterbegin" : "beforeend"
+  );
 
   loadEmbeds();
 
@@ -113,13 +134,18 @@ function renderPosts(api_response) {
  * @param {string} position - afterbegin or beforeend
  */
 function addPosts(posts, position) {
-
-  const timelineNormal = posts.reduce((html, post) => post.data.sticky ? '' : html.concat(post.html), '');
-  const timelineSticky = posts.reduce((html, post) => post.data.sticky ? html.concat(post.html) : '', '');
+  const timelineNormal = posts.reduce(
+    (html, post) => (post.data.sticky ? "" : html.concat(post.html)),
+    ""
+  );
+  const timelineSticky = posts.reduce(
+    (html, post) => (post.data.sticky ? html.concat(post.html) : ""),
+    ""
+  );
 
   els.timelineNormal.insertAdjacentHTML(position, timelineNormal);
   els.timelineSticky.insertAdjacentHTML(position, timelineSticky);
-  els.timelineSticky.classList.remove('sticky--empty');
+  els.timelineSticky.classList.remove("sticky--empty");
 
   checkPending();
   attachSlideshow();
@@ -129,17 +155,17 @@ function addPosts(posts, position) {
 
 function checkPending() {
   let pending = document.querySelectorAll("[data-post-id].mod--displaynone"),
-    one = document.querySelector('[data-one-new-update]').classList,
-    updates = document.querySelector('[data-new-updates]').classList;
+    one = document.querySelector("[data-one-new-update]").classList,
+    updates = document.querySelector("[data-new-updates]").classList;
   if (pending.length === 1) {
-    one.toggle('mod--displaynone', false);
-    updates.toggle('mod--displaynone', true);
+    one.toggle("mod--displaynone", false);
+    updates.toggle("mod--displaynone", true);
   } else if (pending.length > 1) {
-    one.toggle('mod--displaynone', true);
-    updates.toggle('mod--displaynone', false);
+    one.toggle("mod--displaynone", true);
+    updates.toggle("mod--displaynone", false);
   } else {
-    one.toggle('mod--displaynone', true);
-    updates.toggle('mod--displaynone', true);
+    one.toggle("mod--displaynone", true);
+    updates.toggle("mod--displaynone", true);
   }
 }
 /**
@@ -165,7 +191,10 @@ function updatePost(post, rendered) {
   }
 
   // has change the sticky status so we should delete it and add it again.
-  if (post.sticky !== (elem.getAttribute('data-post-sticky').toLowerCase() === 'true') ) {
+  if (
+    post.sticky !==
+    (elem.getAttribute("data-post-sticky").toLowerCase() === "true")
+  ) {
     deletePost(post._id);
     return false;
   }
@@ -189,10 +218,10 @@ function displayNewPosts() {
 }
 
 function reloadScripts(elem) {
-  const $scripts = elem.querySelectorAll('script');
-  $scripts.forEach(($script) => {
-    let s = document.createElement('script');
-    s.type = 'text/javascript';
+  const $scripts = elem.querySelectorAll("script");
+  $scripts.forEach($script => {
+    let s = document.createElement("script");
+    s.type = "text/javascript";
     if ($script.src) {
       s.src = $script.src;
     } else {
@@ -224,18 +253,20 @@ function loadEmbeds() {
 }
 
 function clearCommentDialog() {
-  document.querySelector('#comment-name').value = '';
-  document.querySelector('#comment-content').value = '';
+  document.querySelector("#comment-name").value = "";
+  document.querySelector("#comment-content").value = "";
 }
 
 function toggleCommentDialog() {
-  let commentForm = document.querySelector('form.comment');
+  let commentForm = document.querySelector("form.comment");
   let isHidden = false;
 
-  document.querySelector('.header-bar__comment').classList.toggle('header-bar__comment--active');
+  document
+    .querySelector(".header-bar__comment")
+    .classList.toggle("header-bar__comment--active");
 
   if (commentForm) {
-    isHidden = commentForm.classList.toggle('hide');
+    isHidden = commentForm.classList.toggle("hide");
   }
 
   return !isHidden;
@@ -246,14 +277,15 @@ function toggleCommentDialog() {
  * @param {string} name - liveblog API response JSON.
  */
 function toggleSortBtn(name) {
-  var sortingBtns = document.querySelectorAll('.sorting-bar__order');
+  var sortingBtns = document.querySelectorAll(".sorting-bar__order");
 
-  sortingBtns.forEach((el) => {
+  sortingBtns.forEach(el => {
     var shouldBeActive = el.dataset.hasOwnProperty("jsOrderby_" + name);
 
-    el.classList.toggle('sorting-bar__order--active', shouldBeActive);
+    el.classList.toggle("sorting-bar__order--active", shouldBeActive);
     if (shouldBeActive) {
-      document.querySelector('.sorting-bar__dropdownBtn').innerHTML = el.innerHTML;
+      document.querySelector(".sorting-bar__dropdownBtn").innerHTML =
+        el.innerHTML;
     }
   });
   toggleSortDropdown(false);
@@ -265,11 +297,13 @@ function toggleSortBtn(name) {
  */
 function toggleSortDropdown(open) {
   if (open !== undefined) {
-    document.querySelector('.sorting-bar__dropdownContent')
-      .classList.toggle('sorting-bar__dropdownContent--active', open);
+    document
+      .querySelector(".sorting-bar__dropdownContent")
+      .classList.toggle("sorting-bar__dropdownContent--active", open);
   } else {
-    document.querySelector('.sorting-bar__dropdownContent')
-      .classList.toggle('sorting-bar__dropdownContent--active');
+    document
+      .querySelector(".sorting-bar__dropdownContent")
+      .classList.toggle("sorting-bar__dropdownContent--active");
   }
 
   window.playersState = {};
@@ -281,7 +315,7 @@ function toggleSortDropdown(open) {
  */
 function hideLoadMore(hide) {
   if (els.loadMore) {
-    els.loadMore.classList.toggle('mod--hide', hide);
+    els.loadMore.classList.toggle("mod--hide", hide);
   }
 }
 
@@ -292,40 +326,40 @@ function hideLoadMore(hide) {
 function updateTimestamps() {
   var dateElems = helpers.getElems("relativeDate");
   for (var i = 0; i < dateElems.length; i++) {
-    var elem = dateElems[i]
-      , timestamp = elem.dataset.jsTimestamp;
-    elem.classList.remove('mod--displaynone');
+    var elem = dateElems[i],
+      timestamp = elem.dataset.jsTimestamp;
+    elem.classList.remove("mod--displaynone");
     elem.textContent = helpers.convertTimestamp(timestamp);
   }
   return null;
 }
 
 function showSuccessCommentMsg() {
-  let commentSent = document.querySelector('div.comment-sent');
+  let commentSent = document.querySelector("div.comment-sent");
 
-  commentSent.classList.toggle('hide');
+  commentSent.classList.toggle("hide");
 
   setTimeout(() => {
-    commentSent.classList.toggle('hide');
+    commentSent.classList.toggle("hide");
   }, 5000);
 }
 
 function clearCommentFormErrors() {
-  let errorsMsgs = document.querySelectorAll('p.err-msg');
+  let errorsMsgs = document.querySelectorAll("p.err-msg");
 
   if (errorsMsgs) {
-    errorsMsgs.forEach((errorsMsg) => errorsMsg.remove());
+    errorsMsgs.forEach(errorsMsg => errorsMsg.remove());
   }
 }
 
 function displayCommentFormErrors(errors) {
   if (Array.isArray(errors)) {
-    errors.forEach((error) => {
+    errors.forEach(error => {
       let element = document.querySelector(error.id);
 
       if (element) {
         element.insertAdjacentHTML(
-          'afterend',
+          "afterend",
           `<p class="err-msg">${error.msg}</p>`
         );
       }
@@ -342,18 +376,20 @@ function attachSlideshow() {
 }
 
 function attachPermalink() {
-  const permalinks = document.querySelectorAll('.lb-post-permalink a');
+  const permalinks = document.querySelectorAll(".lb-post-permalink a");
 
-  permalinks.forEach((link) => {
+  permalinks.forEach(link => {
     link.href = permalink.getUrl(link.id);
   });
 }
 
 function attachShareBox() {
-  const shareLinks = document.querySelectorAll('.lb-post-shareBox__item');
+  const shareLinks = document.querySelectorAll(".lb-post-shareBox__item");
 
-  shareLinks.forEach((link) => {
-    link.href = link.getAttribute('data-link-base') + permalink.getUrl(link.getAttribute('data-link-id'));
+  shareLinks.forEach(link => {
+    link.href =
+      link.getAttribute("data-link-base") +
+      permalink.getUrl(link.getAttribute("data-link-id"));
   });
 }
 
@@ -361,7 +397,7 @@ function checkPermalink(posts) {
   var found = false;
 
   if (permalink._id) {
-    posts._items.forEach((post) => {
+    posts._items.forEach(post => {
       if (permalink._id === post._id) {
         found = true;
       }
@@ -372,10 +408,12 @@ function checkPermalink(posts) {
 }
 
 function permalinkScroll() {
-  const scrollElem = document.querySelector(`[data-post-id="${permalink._id}"]`);
+  const scrollElem = document.querySelector(
+    `[data-post-id="${permalink._id}"]`
+  );
 
   if (scrollElem) {
-    scrollElem.classList.add('lb-post-permalink-selected');
+    scrollElem.classList.add("lb-post-permalink-selected");
     scrollElem.scrollIntoView();
     window.onload = function() {
       scrollElem.scrollIntoView();
