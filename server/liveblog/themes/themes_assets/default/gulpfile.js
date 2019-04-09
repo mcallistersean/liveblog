@@ -7,7 +7,7 @@ const del = require("del");
 const path = require("path");
 const nunjucks = require("nunjucks");
 const dateFilter = require("nunjucks-date-filter");
-
+const gutil = require("gulp-util");
 const { ThemeTemplatesLoader } = require("liveblog-shared-tools");
 const { ampifyFilter, addtenFilter } = require("./misc/filters");
 
@@ -264,7 +264,7 @@ gulp.task("install", [], () => {
       "ATTENTION: Make sure you ran gulp wire-deps before install step"
     );
 
-  gulp.src([path.resolve(`${CWD}/package.json`)]).pipe(plugins.install());
+  gulp.src([path.resolve(`${CWD}/package.json`)]).pipe(gutil.noop());
 });
 
 gulp.task("wire-deps", [], wireDeps(theme));
